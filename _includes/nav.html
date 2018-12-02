@@ -1,8 +1,17 @@
+<!--- site.navigation is defined in /_config.yml --!> 
 <nav class="nav-primary" role="navigation" >
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/blog">Blog</a></li>
-    <li><a href="/resume">Resume</a></li>
+    {% for item in site.navigation %}
+      {% if page.url == "/" and item.url == "/index.html" %}
+        {% assign class = 'active' %}
+      {% elsif page.url contains item.url %}
+        {% assign class = 'active' %}
+      {% else %}
+        {% assign class = nil %}
+      {% endif %}
+      <li>
+        <a href="{{ item.url }}" class="{{ class }}">{{ item.title }}</a>
+      </li>
+    {% endfor %}
   </ul>
 </nav>
