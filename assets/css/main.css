@@ -66,3 +66,23 @@ ul.posts li {
 ul.posts a {
 	color: rgb(66, 134, 244);
 }
+
+/*  ****************** */
+/*  BLOG POST - TABLES */
+/*  ****************** */
+
+/* background on table cols */
+.post td:nth-child(even) {
+    background: #ccebff;
+}
+
+/* black border inside table */
+.post th, .post td {
+    border-bottom: 1px solid black;
+}
+
+.post table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+}
