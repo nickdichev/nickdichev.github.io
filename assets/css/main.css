@@ -85,4 +85,5 @@ ul.posts a {
     border-collapse: collapse;
     border: 1px solid black;
     width: 100%;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
