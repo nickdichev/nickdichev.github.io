@@ -1,21 +1,20 @@
 ---
 layout: post
-title: Compressing text files with Elixir -- Data Structures 
+title: Compressing Text Files With Elixir (Part 1)
+subtitle: Data Structures
 date: 2019-05-04
 lcb: "{%"
 ---
 
-# Compressing text files with Elixir
-
-In the talk [The Mess We're In](https://www.youtube.com/watch?v=lKXe3HUG2l4), Joe Armstrong mentions a system that merges similar programs that do the same thing; to essentially delete all duplicate programs. This reminded me of a program I have previously written, a Java implementation of the Huffman algorithm.
+In the talk [The Mess We're In](https://www.youtube.com/watch?v=lKXe3HUG2l4), Joe Armstrong mentions a system he imagined that merges similar programs that do the same thing; to essentially delete all duplicate programs. This reminded me of a program I have previously written, a Java implementation of the Huffman algorithm.
 
 This post is the first in a series which will be exploring powerful, although seemingly basic, features of the Elixir programming language which make implementing the Huffman algorithm a breeze. Some of features we will look into are: binary pattern matching, iolists, and recursion.
 
-This post will serve as an introduction to the Huffman algorithm and the data structures we will be using to implement the the algorithm. You can find the full code with comments, typespecs, and tests on [Github](https://github.com/nickdichev/huffman-elixir).
+You are currently reading part one of the series. Part one will serve as an introduction to the Huffman algorithm and the data structures we will be using to implement the the algorithm. You can find the full code with comments, typespecs, and tests on [Github](https://github.com/nickdichev/huffman-elixir).
 
 ## Introduction
 
-David Huffman, who founded the computer science department at my alma mater UC Santa Cruz (go banana slugs!), invented the Huffman algorithm in 1951 while he was a student at MIT. Huffman was tasked with an assignment to generate efficient binary encodings. Huffman realized he could generate these encodings with a frequency sorted binary tree and actually created a better algorithm than the professor who gave the assignment!
+David Huffman, who founded the computer science department at my alma mater UC Santa Cruz (go banana slugs!), invented the Huffman algorithm in 1951 while he was a student at MIT. Huffman was tasked with an assignment to generate efficient binary encodings. Huffman realized he could generate these encodings with a frequency sorted binary tree. Huffman managed to create a better algorithm than the professor who gave the assignment!
 
 Efficient binary encodings? Frequency sorted binary tree? What are these things? Thankfully, we don't need a degree from MIT to understand these concepts.
 
@@ -55,7 +54,7 @@ However, Huffman realized he could do better. Notice that the characters 'g', 'o
 Huffman's algorithm compresses text by generating smaller encodings for characters that occur more frequently than others. A general description of the algorithm is:
 
 1. Find the occurrence count (weight) of each character for some input text
-2. Store each character and the character's weight weight in a priority queue
+2. Store each character and the character's weight in a priority queue
 3. Merge the elements of the priority queue into a binary tree, where each leaf node in the tree stores a character and the character's weight
 4. Iterate over the binary tree. Store a 0 when iterating to the left of some node or a 1 when iterating to the right of some node. When a leaf node is processed, return the "path" of 0's and 1's we took to get to the leaf node
 5. Replace each character of the input text with the encoding we found in step 4.
@@ -186,11 +185,11 @@ iex(4)> Huffman.TreeNode.merge(left_child, right_child)
 We will use a list as the backbone of our priority queue implementation. Our implementation will queue TreeNode structs in order of increasing character weight. That is to say, a character with frequency 1 will come before a character with frequency 3 in the priority queue. Let's look at the interfaces for the functions we need to implement:
 
 ```bash
-from_map/1 : convert a %{character => weight, ...} map to a priority queue
+from_map/1 : convert a %{character => weight} map to a priority queue
 
 pop/1 : pop the lowest weight element off of the priority queue
 
-insert/2 : insert a TreeNode into the priority queue
+insert/2 : insert an element into a priority queue
 ```
 
 Let's create the file `lib/huffman/priority_queue.ex` and start with our implementation of `pop/1`.
@@ -324,7 +323,7 @@ iex(2)> Huffman.Tree.from_priority_queue(queue)
 
 Notice that the lowest weight nodes ("a", "b") are nested deeper in the tree than the higher cost node ("c").
 
-Now that we have the ability to construct a Huffman tree, we can generate the frequency encodings for each character with an inorder traversal of the tree. I will cover what an inorder traversal is, however, there are plenty of resources online if you need a refresher.
+Now that we have the ability to construct a Huffman tree, we can generate the frequency encodings for each character with an inorder traversal of the tree. I will not cover what an inorder traversal is, however, there are plenty of resources online if you need a refresher.
 
 Let's look at the implementation of `inorder/1`:
 
@@ -379,8 +378,8 @@ iex(1)> %{"g" => 3, "o" => 3, " " => 2, "p" => 1, "h" => 1, "e" => 1, "r" => 1, 
 }
 ```
 
-Notice that the characters that occur more frequently ('g', 'o', ' ') have smaller encodings than characters which occur more frequently. With our frequency based encodings we can encode the string "go go gophers" in 37 bits. That's two bits less than our "3 bits per character" encoding.
+Notice that the characters that occur more frequently ('g', 'o', ' ') have smaller encodings than characters which occur more frequently. With our frequency based encodings we can encode the string "go go gophers" in 37 bits. That's two bits less than the "three bits per character" encoding.
 
 ## Conclusion
 
-Right now we have the ability to generate Huffman encodings from an input character frequency map. We're close to being able to compress some input data! In the next part of this blog series we will implement a character counter and IO helper modules. With those two modules implemented we will be able to actually compress/decompress input data!
+Right now we have the ability to generate Huffman encodings from an input character frequency map. We're close to being able to compress some input data! In the next part of this blog series we will implement character counter and IO helper modules. With those two modules implemented we will be able to actually compress and decompress input data!
