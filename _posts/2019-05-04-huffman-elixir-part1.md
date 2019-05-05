@@ -2,6 +2,7 @@
 layout: post
 title: Compressing text files with Elixir -- Data Structures 
 date: 2019-05-04
+lcb: "{%"
 ---
 
 # Compressing text files with Elixir
@@ -245,7 +246,7 @@ iex(1)> queue = Huffman.PriorityQueue.from_map(%{"a" => 4, "b" => 1})
 ]
 
 iex(2)> Huffman.PriorityQueue.pop(queue)
-{%Huffman.TreeNode{character: "b", left: nil, right: nil, weight: 1},
+{{ page.lcb }}Huffman.TreeNode{character: "b", left: nil, right: nil, weight: 1},
  [%Huffman.TreeNode{character: "a", left: nil, right: nil, weight: 4}]}
 
 iex(3)> new_node = Huffman.TreeNode.from_tuple({"d", 2})
