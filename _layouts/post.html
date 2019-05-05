@@ -9,7 +9,7 @@
     <p class="meta"> {{ page.date | date: "%B %-d, %Y" }} </p>
 
     <div class="post">
-      {{ content | markdownify }}
+      {{ page.content | markdownify }}
     </div>
   </body>
 
