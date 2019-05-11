@@ -5,7 +5,7 @@ subtitle: Compression
 date: 2019-05-11
 ---
 
-My [previous blog post](https://nickdichev.com/blog/2019/05/04/huffman-elixir-part1) introduced to the Huffman algorithim and the data structures used to implement it. Be sure to check out that post if you missed it!
+My [previous blog post](https://nickdichev.com/blog/2019/05/04/huffman-elixir-part1) introduced to the Huffman algorithm and the data structures used to implement it. Be sure to check out that post if you missed it!
 
 In this post we will be exploring how to leverage these data structures and some interesting feature of Elixir to complete the implementation of the Huffman algorithm. The features we will be using are: binary pattern matching, iolists, streams, and recursion.
 
@@ -60,7 +60,7 @@ defmodule Huffman.Counter do
 end
 ```
 
-There's a few new things going on here. We use the `Stream` module in order to do lazy enumeration on our input. Using `Stream` lets us create a "recipie" of computation that will be evaluated when required. I will not be covering the intricacies of lazy and eager enumeration, however, there are plenty of resources online if you are curious. What is important to know is that the `Stream` module allows us to enumerate large, potentially infinite, input data without blowing up the program's memory usage. Let's try to count some characters:
+There's a few new things going on here. We use the `Stream` module in order to do lazy enumeration on our input. Using `Stream` lets us create a "recipe" of computation that will be evaluated when required. I will not be covering the intricacies of lazy and eager enumeration, however, there are plenty of resources online if you are curious. What is important to know is that the `Stream` module allows us to enumerate large, potentially infinite, input data without blowing up the program's memory usage. Let's try to count some characters:
 
 ```elixir
 iex(1)> Huffman.Counter.count(["go", "go"])
@@ -107,7 +107,7 @@ iex(1)> Huffman.Counter.count(["go", "go"])
 
 We have most of the pieces we need to compress some data! First, let's take a look at what we need to accomplish:
 
-1. Find the occurance count for each character in the input
+1. Find the occurrence count for each character in the input
 2. Generate the Huffman encodings based off the character count
 3. Replace each character in the input with the corresponding Huffman encoding
 4. Buffer the Huffman encoded bitstrings into binaries
@@ -168,7 +168,7 @@ end
 
 This function is pretty simple, we use `Enum.map/2` to replace each character from the `encodings` map we pass as a parameter. However, we have a problem. The result of `compressed_output/2` (when enumerated with `Enum.to_list/1`) will look something like: `[7::size(3), 13::size(4), 2::size(2), ...]`. We have a list of bitstrings!
 
-In Elixir strings, binaries, and bitstrings are all related. All are representations of binary (the "bit" kind of binary) data, however, with certain gaurentees. Strings are the most specific: they are Elixir binaries that are UTF-8 encoded. Binaries, on the other hand, must have a bit length that is a multiple of eight. Finally, bitstrings are the least specific. Bitstrings are any groupings of bits. 
+In Elixir strings, binaries, and bitstrings are all related. All are representations of binary (the "bit" kind of binary) data, however, with certain guarantees. Strings are the most specific: they are Elixir binaries that are UTF-8 encoded. Binaries, on the other hand, must have a bit length that is a multiple of eight. Finally, bitstrings are the least specific. Bitstrings are any groupings of bits.
 
 This means that all strings and binaries are also considered bitstrings. For more information, [this](https://medium.com/blackode/playing-with-elixir-binaries-strings-dd01a40039d5) is a pretty comprehensive article with nice graphics to help you understand the difference.
 
@@ -232,7 +232,7 @@ If we have completed a byte, we append the completed byte onto `iolist`. The lef
 
 Notice that we are using an iolist to join the completed binaries. We don't take the usual penalty of appending to the end of a list by doing this. Because of this behavior, you should always use an iolist when you are building output. However, iolists are considered improper lists. Most of the standard list operations will not function as expected on an iolist. However, this isn't a problem for us since the functions we will use to output the compressed data can handle improper lists.
 
-We end the recursion when we have exhausted the list of bitstrings. However, there might be something (most likely a bistring) left in the buffer. We return `{iolist, buffer}` and will handle the leftover buffer in `Huffman.compress/1`. Let's take a look at that:
+We end the recursion when we have exhausted the list of bitstrings. However, there might be something (most likely a bitstring) left in the buffer. We return `{iolist, buffer}` and will handle the leftover buffer in `Huffman.compress/1`. Let's take a look at that:
 
 ```elixir
 defmodule Huffman do
