@@ -1,7 +1,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
-title: Musings of a Software Engineer
+title: Just Another Software Blog
 baseurl: "" 
 url: "" 
 permalink: /blog/:year/:month/:day/:title
