@@ -6,7 +6,7 @@ date: 2019-05-04
 lcb: "{%"
 ---
 
-In the talk [The Mess We're In](https://www.youtube.com/watch?v=lKXe3HUG2l4), Joe Armstrong mentions a system he imagined that merges similar programs that do the same thing; to essentially delete all duplicate programs. This reminded me of a program I have previously written, a Java implementation of the Huffman algorithm.
+In the talk [The Mess We're In](https://www.youtube.com/watch?v=lKXe3HUG2l4), Joe Armstrong mentions a system he imagined that merges similar programs that do the same thing; to essentially delete all duplicate programs. This reminded me of a program I have previously written, a Java implementation of the Huffman compression algorithm. I am currently learning Elixir and thought it would be an interesting exercise to implement the algorithm in a functional manner.
 
 This post is the first in a series which will be exploring powerful, although seemingly basic, features of the Elixir programming language which make implementing the Huffman algorithm a breeze. Some of the features we will be using are: binary pattern matching, iolists, and recursion.
 
