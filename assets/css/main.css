@@ -38,6 +38,11 @@ h1 {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
 
+h2 {
+    font-size: 1.5em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+
 p {
     font-size: 1.25em;
     line-height: 1.4em;
@@ -60,7 +65,8 @@ ul.posts {
 
 ul.posts li {
     list-style: none;
-    margin: .1em 0em 0em 0em;
+    margin: .2em 0em 0em 0em;
+    font-size: 1em;
 }
 
 ul.posts a {
@@ -86,4 +92,13 @@ ul.posts a {
     border: 1px solid black;
     width: 100%;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+
+/*  ****************** */
+/*  BLOG POST - LISTS  */
+/*  ****************** */
+
+.post li {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    margin: .2em 0em 0em 0em;
 }
