@@ -18,12 +18,12 @@ David Huffman, who founded the computer science department at my alma mater UC S
 
 Efficient binary encodings? Frequency sorted binary tree? What are these things? Thankfully, we don't need a degree from MIT to understand these concepts.
 
-First, we need a basic understanding of how text is stored in files. Computers can only store binary data, however, binary data is unreadable to (most) people. Fortunately for us, characters such as 'x', '1', or '\n' can be encoded as binary data in a variety of ways. One such encoding, ASCII, stores characters as binary data in either seven or eight bits. With seven bits we can store the values 0 - 127. This gives us 128 possible characters we can encode with ASCII. With eight bits we can store 0 - 255 for 256 possible characters. For the following example assume we're using seven bit ASCII.
+First, we need a basic understanding of how text is stored in files. Computers can only store binary data, however, binary data is unreadable to (most) people. Fortunately for us, characters such as 'x', '1', or '\n' can be encoded as binary data in a variety of ways. One such encoding, ASCII, stores characters as binary data in either seven or eight bits. With seven bits we can store the values 0 - 127. This gives us 128 possible characters we can encode with ASCII. With eight bits we can store 0 - 255 for 256 possible characters. For the following example assume we're using eight bit ASCII.
 
 For example, the character 'x' is represented by the decimal value 120 or binary `1111000`. You can find [ASCII tables](https://www.ascii-code.com/) online for more examples. Consider the string "go go gophers". This string can be encoded as:
 
 ```bash
-1100111 1101111 1100000 1100111 1101111 1000000 1100111 1101111 1110000 1101000 1100101 1110010 1110011
+01100111 01101111 01100000 01100111 01101111 01000000 01100111 01101111 01110000 01101000 01100101 01110010 01110011
 ```
 
 However, the string "go go gophers" only has 8 unique characters: 'g', 'o', ' ', 'p', 'h', 'e', 'r', and 's'. This means we can create an encoding using only three bits. We can create a lookup table for our encoding:
@@ -45,7 +45,7 @@ With our lookup table we can encode "go go gophers" as:
 000 001 010 000 001 010 000 001 011 100 101 110 111
 ```
 
-With ASCII we need 91 bits to store the string, however, with our encoding we only need 39 bits! These are the "efficient binary encodings" Huffman was looking for!
+With ASCII we need 104 bits to store the string, however, with our encoding we only need 39 bits! These are the "efficient binary encodings" Huffman was looking for!
 
 However, Huffman realized he could do better. Notice that the characters 'g', 'o', and ' ' occur more frequently than the rest of the characters in our example string. Huffman's algorithm creates more efficient encodings by assigning smaller (less bits) encodings to characters which occur more frequently. Let's take a basic look at how the Huffman algorithm works.
 
