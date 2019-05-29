@@ -21,7 +21,7 @@ We will be implementing the function `count/1` which takes a list of binaries an
 
 ```elixir
 iex(1)> String.split("go go gophers", "", trim: true)
-[g", "o", " ", "g", "o", " ", "g", "o", "p", "h", "e", "r", "s"]
+["g", "o", " ", "g", "o", " ", "g", "o", "p", "h", "e", "r", "s"]
 ```
 
 Looking good! Now, we're ready to count all of these characters. Let's start our implementation of the `Huffman.Counter` module:
