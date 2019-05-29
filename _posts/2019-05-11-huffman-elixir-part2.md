@@ -20,15 +20,8 @@ As you may recall, the Huffman algorithm compresses text by assigning shorter en
 We will be implementing the function `count/1` which takes a list of binaries and returns a map of `character => count` entries. Let's do some initial exploration on how we can accomplish this in an `iex` shell:
 
 ```elixir
-iex(1)> String.split("go go gophers", "")
-["", "g", "o", " ", "g", "o", " ", "g", "o", "p", "h", "e", "r", "s", ""]
-```
-
-We can use `String.split/2` to split the input into graphemes. However, there's a problem! We have some "garbage" strings surrounding the characters that we care about. Let's get rid of them with `Enum.filter/2`:
-
-```elixir
-iex(1)> String.split("go go gophers", "") |> Enum.filter(fn x -> x != "" end)
-["g", "o", " ", "g", "o", " ", "g", "o", "p", "h", "e", "r", "s"]
+iex(1)> String.split("go go gophers", "", trim: true)
+[g", "o", " ", "g", "o", " ", "g", "o", "p", "h", "e", "r", "s"]
 ```
 
 Looking good! Now, we're ready to count all of these characters. Let's start our implementation of the `Huffman.Counter` module:
@@ -53,8 +46,7 @@ defmodule Huffman.Counter do
 
   def count(binaries) do
     binaries
-    |> Stream.map(&String.split(&1, ""))
-    |> Stream.map(&Enum.filter(&1, fn x -> x != "" end))
+    |> Stream.map(&String.split(&1, "", trim: true))
     |> Stream.map(&count_helper(&1, %{}))
   end
 end
@@ -88,8 +80,7 @@ defmodule Huffman.Counter do
 
   def count(binaries) do
     binaries
-    |> Stream.map(&String.split(&1, ""))
-    |> Stream.map(&Enum.filter(&1, fn x -> x != "" end))
+    |> Stream.map(&String.split(&1, "", trim: true))
     |> Stream.map(&count_helper(&1, %{}))
     |> Enum.reduce(&merge_maps(&1, &2))
   end
@@ -150,8 +141,7 @@ defmodule Huffman do
 
   defp compressed_output(encodings, input) do
     input
-    |> Stream.map(&String.split(&1, ""))
-    |> Stream.map(&Enum.filter(&1, fn x -> x != "" end))
+    |> Stream.map(&String.split(&1, "", trim: true))
     |> Stream.map(&IOHelper.encode_characters(&1, encodings))
     |> Stream.flat_map(&List.flatten/1)
   end
